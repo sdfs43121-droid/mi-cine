@@ -3,129 +3,105 @@
 <head>
 <meta charset="UTF-8">
 <title>Mi Cine</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body {
   margin: 0;
-  background: #000;
+  background: #141414;
   color: #fff;
   font-family: Arial, sans-serif;
 }
-
-h1 {
+header {
+  background: #000;
+  padding: 15px 30px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #e50914;
+}
+section {
   padding: 20px;
 }
-
+h2 {
+  margin-bottom: 10px;
+}
 .catalogo {
   display: flex;
-  gap: 20px;
-  padding: 20px;
-  flex-wrap: wrap;
+  gap: 15px;
+  overflow-x: auto;
 }
-
 .card {
-  width: 180px;
+  min-width: 160px;
   cursor: pointer;
 }
-
 .card img {
-  width: 100%;
-  border-radius: 10px;
+  width: 160px;
+  height: 240px;
+  border-radius: 6px;
 }
-
-.card h3 {
+.card p {
+  margin: 6px 0 0;
+  font-size: 14px;
   text-align: center;
-  font-size: 16px;
-  margin-top: 8px;
 }
-
 #player {
+  display: none;
   position: fixed;
   inset: 0;
-  background: black;
-  display: none;
-  flex-direction: column;
+  background: #000;
+  z-index: 999;
 }
-
-#cerrar {
-  padding: 10px;
-  background: #111;
-  color: white;
-  border: none;
-  font-size: 16px;
-}
-
-video {
+#player video {
   width: 100%;
   height: 100%;
+}
+#cerrar {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1000;
 }
 </style>
 </head>
 
 <body>
 
-<h1>🎬 Cine Cristiano</h1>
+<header>MI CINE</header>
 
-<div class="catalogo" id="catalogo"></div>
+<section>
+  <h2>Películas cristianas</h2>
+  <div class="catalogo">
+
+    <div class="card" onclick="ver('https://TU_LINK_AQUI.mp4')">
+      <img src="imagenes/tiempos.jpg">
+      <p>El que cambia los tiempos</p>
+    </div>
+
+    <div class="card" onclick="ver('https://TU_LINK_AQUI.mp4')">
+      <img src="imagenes/perdon.jpg">
+      <p>Perdón</p>
+    </div>
+
+  </div>
+</section>
 
 <div id="player">
-  <button id="cerrar" onclick="cerrar()">⬅ Volver</button>
-  <video id="video" controls autoplay playsinline></video>
+  <div id="cerrar" onclick="cerrar()">✖</div>
+  <video id="video" controls autoplay></video>
 </div>
 
 <script>
-// 🔹 LISTA DE PELÍCULAS (AGREGÁ TODAS ACÁ)
-const peliculas = [
-  {
-    titulo: "El que cambia los tiempos",
-    archivo: "videos/tiempos.mp4",
-    imagen: "imagenes/tiempos.jpg"
-  },
-  {
-    titulo: "La Fe que Vence",
-    archivo: "videos/fe.mp4",
-    imagen: "imagenes/fe.jpg"
-  },
-  {
-    titulo: "Perdón",
-    archivo: "videos/perdon.mp4",
-    imagen: "imagenes/perdon.jpg"
-  }
-];
-
-// 🔹 CREAR CATÁLOGO AUTOMÁTICAMENTE
-const contenedor = document.getElementById("catalogo");
-
-peliculas.forEach(p => {
-  const card = document.createElement("div");
-  card.className = "card";
-  card.innerHTML = `
-    <img src="${p.imagen}">
-    <h3>${p.titulo}</h3>
-  `;
-  card.onclick = () => reproducir(p.archivo);
-  contenedor.appendChild(card);
-});
-
-// 🔹 REPRODUCTOR MP4
-function reproducir(archivo) {
-  const player = document.getElementById("player");
-  const video = document.getElementById("video");
-
-  video.src = archivo;
-  video.load();
-  video.play();
-
-  player.style.display = "flex";
+function ver(url) {
+  const v = document.getElementById("video");
+  v.src = url;
+  document.getElementById("player").style.display = "block";
 }
-
 function cerrar() {
-  const player = document.getElementById("player");
-  const video = document.getElementById("video");
-
-  video.pause();
-  video.src = "";
-  player.style.display = "none";
+  const v = document.getElementById("video");
+  v.pause();
+  v.src = "";
+  document.getElementById("player").style.display = "none";
 }
 </script>
 
