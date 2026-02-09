@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Mi Cine</title>
+
+<style>
+body {
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  padding: 20px;
+}
+
+.catalogo {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 180px;
+  cursor: pointer;
+}
+
+.card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.card h3 {
+  text-align: center;
+  font-size: 16px;
+  margin-top: 8px;
+}
+
+#player {
+  position: fixed;
+  inset: 0;
+  background: black;
+  display: none;
+  flex-direction: column;
+}
+
+#cerrar {
+  padding: 10px;
+  background: #111;
+  color: white;
+  border: none;
+  font-size: 16px;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎬 Cine Cristiano</h1>
+
+<div class="catalogo" id="catalogo"></div>
+
+<div id="player">
+  <button id="cerrar" onclick="cerrar()">⬅ Volver</button>
+  <video id="video" controls autoplay playsinline></video>
+</div>
+
+<script>
+// 🔹 LISTA DE PELÍCULAS (AGREGÁ TODAS ACÁ)
+const peliculas = [
+  {
+    titulo: "El que cambia los tiempos",
+    archivo: "videos/tiempos.mp4",
+    imagen: "imagenes/tiempos.jpg"
+  },
+  {
+    titulo: "La Fe que Vence",
+    archivo: "videos/fe.mp4",
+    imagen: "imagenes/fe.jpg"
+  },
+  {
+    titulo: "Perdón",
+    archivo: "videos/perdon.mp4",
+    imagen: "imagenes/perdon.jpg"
+  }
+];
+
+// 🔹 CREAR CATÁLOGO AUTOMÁTICAMENTE
+const contenedor = document.getElementById("catalogo");
+
+peliculas.forEach(p => {
+  const card = document.createElement("div");
+  card.className = "card";
+  card.innerHTML = `
+    <img src="${p.imagen}">
+    <h3>${p.titulo}</h3>
+  `;
+  card.onclick = () => reproducir(p.archivo);
+  contenedor.appendChild(card);
+});
+
+// 🔹 REPRODUCTOR MP4
+function reproducir(archivo) {
+  const player = document.getElementById("player");
+  const video = document.getElementById("video");
+
+  video.src = archivo;
+  video.load();
+  video.play();
+
+  player.style.display = "flex";
+}
+
+function cerrar() {
+  const player = document.getElementById("player");
+  const video = document.getElementById("video");
+
+  video.pause();
+  video.src = "";
+  player.style.display = "none";
+}
+</script>
+
+</body>
+</html>
